@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.tedu.order.mapper.OrderMapper">
+	<!-- 编写OrderRM的map内容 -->
+	<resultMap type="Order" id="OrderRM">
+		<!-- 定义一个字段域属性的关系,关联键的属性值,order_id对应的属性orderId -->
+		<id property="orderId" column="order_id"/>
+		<!-- 定义对多的关系 -->
+		<collection property="orderItems" javaType="ArrayList" ofType="OrderItem" column="order_id" select="queryOrderItems" />
+	</resultMap>
+
+	<select id="queryOrderItems" parameterType="string" resultType="OrderItem">
+		select * from t_order_item where order_id=#{orderId};
+	</select>
+	<!-- 查询主表数据先,利用在resultMap中封装从表的数据 -->
+	<select id="queryMyOrder" parameterType="String" resultMap="OrderRM">
+		select * from t_order where user_id=#{userId};
+	</select>
+	
+	<!-- insert订单数据,t_order,t_order_item -->
+	<insert id="addOrder" parameterType="Order">
+		<!-- 主表数据插入 -->
+		insert into t_order (
+			order_id,order_money,order_receiverinfo,order_paystate,order_time,user_id)
+		values
+			(#{orderId},#{orderMoney},#{orderReceiverinfo},#{orderPaystate},#{orderTime},#{userId});
+		<!-- 从表数据 -->
+		insert into t_order_item (
+		order_id,product_id,num,product_image,product_name,product_price)
+		values
+			<foreach collection="orderItems" item="item" separator=",">
+				(#{orderId},#{item.productId},#{item.num},
+				#{item.productImage},#{item.productName},#{item.productPrice})
+			</foreach>;
+	</insert>
+	
+	<delete id="deleteOrder" parameterType="String">
+        DELETE FROM t_order_item WHERE t_order_item.order_id IN (SELECT order_id FROM t_order WHERE t_order.order_id=#{orderId});
+        DELETE FROM t_order WHERE order_id=#{orderId};
+	</delete>
+	<delete id="deleteOTOrder" parameterType="Date">
+		delete a,b from t_order a,t_order_item b where a.order_id=b.order_id and order_paystate=0 and order_time &lt;#{otTime}
+	</delete>
+</mapper> 
+
+
+
+
+
+
+
+
+
+
+
+

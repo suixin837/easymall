@@ -1,0 +1,31 @@
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka
+mybatis:
+  configuration:
+    cacheEnabled: false
+    mapUnderscoreToCamelCase: true
+  mapperLocations: classpath:mapper/*.xml
+  typeAliasesPackage: com.jt.common.pojo
+server:
+  port: 10007
+spring:
+  application:
+    name: orderservice
+  datasource:
+    driverClassName: com.mysql.jdbc.Driver
+    initialSize: 5
+    maxActive: 50
+    maxIdle: 10
+    minIdle: 5
+    url: jdbc:mysql://192.168.11.129:8066/easydb?useUnicode=true&characterEncoding=utf-8
+    username: root
+    password: root
+    type: com.alibaba.druid.pool.DruidDataSource
+  redis:
+    cluster:
+      maxIdle: 10
+      maxTotal: 100
+      minIdle: 5
+      nodes: 49.233.79.220:8000,49.233.79.220:8001

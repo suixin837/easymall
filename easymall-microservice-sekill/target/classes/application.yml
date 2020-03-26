@@ -1,0 +1,40 @@
+server:
+  port: 10009
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka
+mybatis:
+  configuration:
+    cacheEnabled: false
+    mapUnderscoreToCamelCase: true
+  mapperLocations: classpath:mapper/*.xml
+  typeAliasesPackage: com.jt.common.pojo
+spring:
+  application:
+    name: seckillservice
+  datasource:
+    driverClassName: com.mysql.jdbc.Driver
+    initialSize: 5
+    maxActive: 50
+    maxIdle: 10
+    minIdle: 5
+    url: jdbc:mysql://suixin837.mysql.rds.aliyuncs.com:3306/seckill?useUnicode=true&characterEncoding=utf-8&useSSL=true
+    username: root
+    password: suixin837@ruoyi
+    type: com.alibaba.druid.pool.DruidDataSource
+  rabbitmq:
+    host: 192.168.11.129
+    port: 5672
+    username: guest
+    password: guest
+    virtual-host: /
+  redis:
+    cluster:
+      maxIdle: 10
+      maxTotal: 100
+      minIdle: 5
+      nodes: 49.233.79.220:8000,49.233.79.220:8001
+logging:
+  level:
+    cn.tedu.seckill.mapper: debug

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.tedu.seckill.mapper.SucMapper">
+	<insert id="saveSuc" parameterType="Success">
+	insert into success (seckill_id,user_phone,state,create_time)
+	 values (#{seckillId},#{userPhone},#{state},#{createTime});
+	</insert>
+</mapper> 
+
+
+
+
+
+
+
+
+
+
+
+

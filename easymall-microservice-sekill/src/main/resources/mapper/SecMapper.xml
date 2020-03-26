@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.tedu.seckill.mapper.SecMapper">
+	<select id="queryAll" resultType="Seckill">
+		select * from seckill.seckill;
+	</select>
+	<select id="queryById" parameterType="long" resultType="Seckill">
+		select * from seckill.seckill where seckill_id=#{seckillId};
+	</select>
+	<update id="updateNumber">
+		update seckill set number=number-1 where
+		#{nowTime} &lt;end_time and #{nowTime} &gt;start_time
+		and seckill_id=#{seckillId};
+	</update>
+	<update id="updateNumberPlus" parameterType="long">
+		update seckill set number=number+1 where
+		seckill_id=#{seckillId};
+	</update>
+</mapper> 
+
+
+
+
+
+
+
+
+
+
+
+
